@@ -1,4 +1,6 @@
-class TicketBooker
+import java.util.*;
+
+class TicketManager
 {
 
 	private static int availableLowerBerth = 5;
@@ -16,6 +18,8 @@ class TicketBooker
 	private static List<Integer> middleBerthPositions = new ArrayList<>(Arrays.asList(1,2,3,4,5));
 	private static List<Integer> racPositions = new ArrayList<>(Arrays.asList(1,2));
 	private static List<Integer> wlPositions = new ArrayList<>(Arrays.asList(1));
+
+	private static HashMap<Integer, Passenger> passengersList = new HashMap<>();
 
 	int getAvailableLowerBerth()
 	{
@@ -137,4 +141,53 @@ class TicketBooker
 		wlPositions.remove(0);
 	}
 
+	void putLowerBerthPosition(Passenger p)
+	{
+		lowerBerthPositions.add(p.seatNumber);
+		p.seatNumber = -1;
+	}
+
+	void putMiddleBerthPosition(Passenger p)
+	{
+		middleBerthPositions.add(p.seatNumber);
+		p.seatNumber = -1;
+	}
+
+	void putUpperBerthPosition(Passenger p)
+	{
+		upperBerthPositions.add(p.seatNumber);
+		p.seatNumber = -1;
+	}
+
+	void putRACPosition(Passenger p)
+	{
+		racPositions.add(p.seatNumber);
+		p.seatNumber = -1;
+	}
+
+	void putWLPosition(Passenger p)
+	{
+		wlPositions.add(p.seatNumber);
+		p.seatNumber = -1;
+	}
+
+	void insertPassengersList(Passenger p)
+	{
+		passengersList.put(p.passengerId, p);
+	}
+	
+	void removePassengersList(Passenger p)
+	{
+		passengersList.remove(p.passengerId);
+	}
+
+	boolean getPassengerById(int id, Passenger p)
+	{
+		if(passengersList.containsKey(id)) 
+		{
+			p = passengersList.get(id);
+			return true;
+		}
+		return false;
+	}
 }
