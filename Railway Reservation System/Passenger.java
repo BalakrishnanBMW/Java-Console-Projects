@@ -19,7 +19,7 @@ class Passenger
 		this.gender = gender;
 		this.preferedBerth = preferedBerth;
 		this.allotedBerth = "";
-		this.number = -1;
+		this.seatNumber = -1;
 	}
 
 	int getPassengerId()
@@ -64,11 +64,11 @@ class Passenger
 		this.preferedBerth = preferedBerth;
 	}	
 
-	String getSeatNumber()
+	int getSeatNumber()
 	{
 		return this.seatNumber;
 	}
-	void setSeatNumber(String seatNumber)
+	void setSeatNumber(int seatNumber)
 	{
 		this.seatNumber = seatNumber;
 	}
@@ -77,14 +77,14 @@ class Passenger
 	{
 		return this.allotedBerth;
 	}
-	void getAllotedBerth(String allotedBerth)
+	void setAllotedBerth(String allotedBerth)
 	{
 		this.allotedBerth = allotedBerth;
 	}
 	
-	String toString()
+	public String toString()
 	{
-		return "Id : " + this.passengerId + ".\nPassenger Name : " + this.passengerName + ". Age : " + this.age + ". "Gender : " + this.gender + ".\nGiven Berth : " + this.allotedBerth + ". Seat Number : " + this.seatNumber;
+		return "Id : " + this.passengerId + ".\nPassenger Name : " + this.passengerName + ". Age : " + this.age + ". Gender : " + this.gender + ".\nGiven Berth : " + this.allotedBerth + ". Seat Number : " + this.seatNumber;
 	}
 
 }

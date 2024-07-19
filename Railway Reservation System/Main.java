@@ -13,15 +13,20 @@ public class Main
 			System.out.println("\tMenu");
 			System.out.println("1.Book Ticket\n2. Cancel Ticket\n3.View Booked List\n4.View Availability\n5.Exit");
 			choice = sc.nextInt();
+			sc.nextLine();
 			
 
 	switch(choice) {
 		case 1 -> {
 			System.out.println("Booking Ticket");
+			System.out.println("Enter your name : ");
 			String name = sc.nextLine();
+			System.out.println("Enter your age : ");
 			int age = sc.nextInt();
 			sc.nextLine();
+			System.out.println("Enter gender : ");
 			String gender = sc.nextLine();
+			System.out.println("Enter Prefered Berth: ");
 			String preferedBerth = sc.nextLine();
 			Passenger p = new Passenger(name, age, gender, preferedBerth);
 			tb.bookTicket(p);

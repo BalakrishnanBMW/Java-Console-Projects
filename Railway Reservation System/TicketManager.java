@@ -10,8 +10,8 @@ class TicketManager
 	private static int availableWL = 1;
 
 	private static ArrayList<Integer> bookedTicketList = new ArrayList<Integer>();
-	private static Queue<Integer> racQueue = new Queue<>();
-	private static Queue<Integer> wlQueue = new Queue<>();
+	private static Queue<Integer> racQueue = new LinkedList<>();
+	private static Queue<Integer> wlQueue = new LinkedList<>();
 
 	private static List<Integer> lowerBerthPositions = new ArrayList<>(Arrays.asList(1,2,3,4,5));
 	private static List<Integer> upperBerthPositions = new ArrayList<>(Arrays.asList(1,2,3,4,5));
@@ -108,77 +108,77 @@ class TicketManager
 
 	void getLowerBerthPosition(Passenger p)
 	{
-		p.seatNumber = lowerBerthPositions.get(0);
-		p.allotedBerth = "L";
+		p.setSeatNumber(lowerBerthPositions.get(0));
+		p.setAllotedBerth("L");
 		lowerBerthPositions.remove(0);
 	}
 
 	void getMiddleBerthPosition(Passenger p)
 	{
-		p.seatNumber = middleBerthPositions.get(0);
-		p.allotedBerth = "M";
+		p.setSeatNumber(middleBerthPositions.get(0));
+		p.setAllotedBerth("M");
 		middleBerthPositions.remove(0);
 	}
 
 	void getUpperBerthPosition(Passenger p)
 	{
-		p.seatNumber = upperBerthPositions.get(0);
-		p.allotedBerth = "U";
+		p.setSeatNumber(upperBerthPositions.get(0));
+		p.setAllotedBerth("U");
 		upperBerthPositions.remove(0);
 	}
 
 	void getRACPosition(Passenger p)
 	{
-		p.seatNumber = racPositions.get(0);
-		p.allotedBerth = "RAC";
-		RACPositions.remove(0);
+		p.setSeatNumber(racPositions.get(0));
+		p.setAllotedBerth("RAC");
+		racPositions.remove(0);
 	}
 
 	void getWLPosition(Passenger p)
 	{
-		p.seatNumber = wlPositions.get(0);
-		p.allotedBerth = "WL";
+		p.setSeatNumber(wlPositions.get(0));
+		p.setAllotedBerth("WL");
 		wlPositions.remove(0);
 	}
 
 	void putLowerBerthPosition(Passenger p)
 	{
-		lowerBerthPositions.add(p.seatNumber);
-		p.seatNumber = -1;
+		lowerBerthPositions.add(p.getSeatNumber());
+		p.setSeatNumber(-1);
 	}
 
 	void putMiddleBerthPosition(Passenger p)
 	{
-		middleBerthPositions.add(p.seatNumber);
-		p.seatNumber = -1;
+		middleBerthPositions.add(p.getSeatNumber());
+		p.setSeatNumber(-1);
 	}
 
 	void putUpperBerthPosition(Passenger p)
 	{
-		upperBerthPositions.add(p.seatNumber);
-		p.seatNumber = -1;
+		upperBerthPositions.add(p.getSeatNumber());
+		p.setSeatNumber(-1);
 	}
 
 	void putRACPosition(Passenger p)
 	{
-		racPositions.add(p.seatNumber);
-		p.seatNumber = -1;
+		racPositions.add(p.getSeatNumber());
+		p.setSeatNumber(-1);
 	}
 
 	void putWLPosition(Passenger p)
 	{
-		wlPositions.add(p.seatNumber);
-		p.seatNumber = -1;
+		wlPositions.add(p.getSeatNumber());
+		p.setSeatNumber(-1);
 	}
 
 	void insertPassengersList(Passenger p)
 	{
-		passengersList.put(p.passengerId, p);
+		passengersList.put(p.getPassengerId(), p);
 	}
 	
 	void removePassengersList(Passenger p)
 	{
-		passengersList.remove(p.passengerId);
+		passengersList.remove(p.getPassengerId());
 	}
 
 	boolean getPassengerById(int id, Passenger p)
@@ -190,4 +190,39 @@ class TicketManager
 		}
 		return false;
 	}
+
+
+	void pushRACQueue(Passenger p)
+	{
+		racQueue.add(p.getPassengerId());
+	}
+	void pushWLQueue(Passenger p)
+	{
+		wlQueue.add(p.getPassengerId());
+	}
+	int racQSize()
+	{
+		return racQueue.size();
+	}
+	int wlQSize()
+	{
+		return wlQueue.size();
+	}
+	int pollRACQueue()
+	{
+		return racQueue.poll();
+	}
+	int pollWLQueue()
+	{
+		return wlQueue.poll();
+	}
+	void racQRemove(Passenger p)
+	{
+		racQueue.remove(p.getPassengerId());
+	}
+	void wlQRemove(Passenger p)
+	{
+		wlQueue.remove(p.getPassengerId());
+	}
+
 }
