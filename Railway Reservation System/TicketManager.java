@@ -3,10 +3,10 @@ import java.util.*;
 class TicketManager
 {
 
-	private static int availableLowerBerth = 5;
-	private static int availableUpperBerth = 5;
-	private static int availableMiddleBerth = 5;
-	private static int availableRAC = 2;
+	private static int availableLowerBerth = 3;
+	private static int availableUpperBerth = 3;
+	private static int availableMiddleBerth = 3;
+	private static int availableRAC = 1;
 	private static int availableWL = 1;
 
 	private static ArrayList<Integer> bookedTicketList = new ArrayList<Integer>();
@@ -171,24 +171,27 @@ class TicketManager
 		p.setSeatNumber(-1);
 	}
 
-	void insertPassengersList(Passenger p)
+	void insertToPassengersList(Passenger p)
 	{
 		passengersList.put(p.getPassengerId(), p);
 	}
-	
-	void removePassengersList(Passenger p)
+	void deleteFromPassengersList(Passenger p)
 	{
 		passengersList.remove(p.getPassengerId());
 	}
+	
+	HashMap<Integer, Passenger> getPassengersList()
+	{
+		return passengersList;
+	}
 
-	boolean getPassengerById(int id, Passenger p)
+	Passenger getPassengerById(int id)
 	{
 		if(passengersList.containsKey(id)) 
 		{
-			p = passengersList.get(id);
-			return true;
+			return passengersList.get(id);
 		}
-		return false;
+	return null;
 	}
 
 

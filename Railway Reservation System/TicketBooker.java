@@ -1,3 +1,5 @@
+import java.util.*;
+
 class TicketBooker 
 {
 
@@ -9,19 +11,19 @@ class TicketBooker
 		{
 			tm.getLowerBerthPosition(p);
 			tm.decreAvailableLowerBerth();
-			tm.insertPassengersList(p);
+			tm.insertToPassengersList(p);
 		}
 		else if(p.getPreferedBerth().toUpperCase().equals("M") && tm.isMiddleBerthAvailable()) 
 		{
 			tm.getMiddleBerthPosition(p);
 			tm.decreAvailableMiddleBerth();
-			tm.insertPassengersList(p);
+			tm.insertToPassengersList(p);
 		}
 		else if(p.getPreferedBerth().toUpperCase().equals("U") && tm.isUpperBerthAvailable()) 
 		{
 			tm.getUpperBerthPosition(p);
 			tm.decreAvailableUpperBerth();
-			tm.insertPassengersList(p);
+			tm.insertToPassengersList(p);
 		}
 		else if(tm.isLowerBerthAvailable() || tm.isMiddleBerthAvailable() || tm.isUpperBerthAvailable())
 		{
@@ -29,44 +31,40 @@ class TicketBooker
 			{
 				tm.getLowerBerthPosition(p);
 				tm.decreAvailableLowerBerth();
-				tm.insertPassengersList(p);
+				tm.insertToPassengersList(p);
 			}
 			else if(tm.isMiddleBerthAvailable()) 
 			{
 				tm.getMiddleBerthPosition(p);
 				tm.decreAvailableMiddleBerth();
-				tm.insertPassengersList(p);
+				tm.insertToPassengersList(p);
 			}
 			else if(tm.isUpperBerthAvailable()) 
 			{
 				tm.getUpperBerthPosition(p);
 				tm.decreAvailableUpperBerth();
-				tm.insertPassengersList(p);
+				tm.insertToPassengersList(p);
 			}
 		}
 		else if(tm.isRACAvailable())
 		{
 			tm.getRACPosition(p);
 			tm.decreAvailableRAC();
-			tm.insertPassengersList(p);
+			tm.insertToPassengersList(p);
 			tm.pushRACQueue(p);
 		}
 		else if(tm.isWLAvailable())
 		{
 			tm.getWLPosition(p);
 			tm.decreAvailableWL();
-			tm.insertPassengersList(p);
+			tm.insertToPassengersList(p);
 			tm.pushWLQueue(p);
 		}
 	}
 
 	void cancelTicket(int id)
 	{
-		Passenger p = null;
-		if(!tm.getPassengerById(id,p)) {
-			System.out.println("Id is invalid");
-			return;
-		}
+		Passenger p = tm.getPassengerById(id);
 
 		int seatNumber = p.getSeatNumber();
 		String allotedBerth = p.getAllotedBerth();
@@ -83,32 +81,36 @@ class TicketBooker
 			tm.putUpperBerthPosition(p);
 			tm.increAvailableLowerBerth();
 		}
+		tm.deleteFromPassengersList(p);
 
 		if(tm.racQSize() > 0) 
 		{
-			Passenger pFromRAC = null;
-			int idrac = tm.pollRACQueue();
-			tm.getPassengerById(idrac, pFromRAC);
+			Passenger pFromRAC = tm.getPassengerById(tm.pollRACQueue());
 
 			tm.putRACPosition(pFromRAC);
 			tm.increAvailableRAC();
 			tm.racQRemove(pFromRAC);
+			tm.deleteFromPassengersList(pFromRAC);
 
 			bookTicket(pFromRAC);
 		
 			if(tm.wlQSize() > 0)
 			{
-				Passenger pFromWL = null;
-				int idwl = tm.pollWLQueue();
-				tm.getPassengerById(idwl, pFromWL);
+				Passenger pFromWL = tm.getPassengerById(tm.pollWLQueue());
 
 				tm.putWLPosition(pFromWL);
 				tm.increAvailableWL();
 				tm.wlQRemove(pFromWL);
+				tm.deleteFromPassengersList(pFromWL);
 
 				bookTicket(pFromWL);
 			}
 		}
+	}
+
+	HashMap<Integer, Passenger> getBookedList() 
+	{
+		return tm.getPassengersList();
 	}
 
 }
