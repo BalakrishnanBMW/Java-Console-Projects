@@ -1,3 +1,5 @@
+import order.Order;
+import payment.Payment;
 import user.*;
 import inventory.*;
 import java.util.*;
@@ -124,7 +126,7 @@ public class Main {
 		Inventory inv = new Inventory();
 		do {
 			System.out.println("\n\n\tMenu");
-			System.out.print("1.Profile  2.List Inventory  3.View Cart 4.Order History 5.Exit\nEnter Option> ");
+			System.out.print("1.Profile  2.List Inventory  3.View Cart  4.Order History  5.Log out\nEnter Option> ");
 			choice = sc.nextInt();
 			sc.nextLine();
 			System.out.println();
@@ -156,7 +158,7 @@ public class Main {
 							System.out.println();
 						}
 						case 2 -> {
-							System.out.println("Enter the product id which you want to place order : ");
+							System.out.print("Enter the product id which you want to place order : ");
 							int pid = sc.nextInt();
 							sc.nextLine();
 
@@ -168,12 +170,31 @@ public class Main {
 
 							if(inv.validateProduct(pid, count)) {
 								p.setCount(p.getCount() - count);
-								System.out.println("You sucessfully ordered the product");
-								System.out.println(p.getProductName() + "\nNos = " + count + "\nprice = "+ count*p.getPricePerUnit());
-								Product soldProd = new Product(p.getProductName(), count, count*p.getPricePerUnit());
 								Seller s = Seller.getSellerById(p.getSellerId());
+								System.out.println(p.getProductName() + "\nNos = " + count + "\nprice = "+ count*p.getPricePerUnit());
+								Order soldProd = new Order(p.getProductName(), count, p.getPricePerUnit(), buyer, s);
+								System.out.print("Enter the Payment mode : (1.credit card, 2.UPI, 3.POD) : ");
+								String paymentMethod = new String();
+								int paymentOption = sc.nextInt();
+								sc.nextLine();
+								switch (paymentOption) {
+									case 1 -> {
+										paymentMethod = "Credit Card";
+									}
+									case 2 -> {
+										paymentMethod = "UPI";
+									}
+									case 3 -> {
+										paymentMethod = "Pay On Delivery";
+									}
+								}
+								Payment payment = new Payment(soldProd, paymentMethod);
+								System.out.println("You sucessfully ordered the product");
                                 s.putSoldHistory(soldProd);
 								buyer.putOrderHistory(soldProd);
+								buyer.putPayments(payment);
+								s.recievedPayments(payment);
+								System.out.println(payment);
 							} else  {
 								System.out.println("Product is less in count");
 							}
@@ -213,12 +234,31 @@ public class Main {
 
 							if(inv.validateProduct(pid, count)) {
 								p.setCount(p.getCount() - count);
-								System.out.println("You sucessfully ordered the product");
-								System.out.println(p.getProductName() + "\nNos = " + count + "\nprice = "+ count*p.getPricePerUnit());
-								Product soldProd = new Product(p.getProductName(), count, count*p.getPricePerUnit());
 								Seller s = Seller.getSellerById(p.getSellerId());
+								System.out.println(p.getProductName() + "\nNos = " + count + "\nprice = "+ count*p.getPricePerUnit());
+								Order soldProd = new Order(p.getProductName(), count, p.getPricePerUnit(), buyer, s);
+								System.out.print("Enter the Payment mode : (1.credit card, 2.UPI, 3.POD) : ");
+								String paymentMethod = new String();
+								int paymentOption = sc.nextInt();
+								sc.nextLine();
+								switch (paymentOption) {
+									case 1 -> {
+										paymentMethod = "Credit Card";
+									}
+									case 2 -> {
+										paymentMethod = "UPI";
+									}
+									case 3 -> {
+										paymentMethod = "Pay On Delivery";
+									}
+								}
+								Payment payment = new Payment(soldProd, paymentMethod);
+								System.out.println("You sucessfully ordered the product");
 								s.putSoldHistory(soldProd);
 								buyer.putOrderHistory(soldProd);
+								buyer.putPayments(payment);
+								s.recievedPayments(payment);
+								System.out.println(payment);
 							} else  {
 								System.out.println("Product is less in count");
 							}
@@ -229,12 +269,22 @@ public class Main {
 
 				case 4 -> {
 					System.out.println("Order History");
-					List<Product> orderHist = buyer.getOrderHistory();
+					List<Order> orderHist = buyer.getOrderHistory();
 					System.out.println("Product | Nos | Price ");
-					for(Product p : orderHist) {
-						System.out.println(p.getProductName()+ " | "+p.getCount()+" | "+ p.getSoldProd());
+					for(Order o : orderHist) {
+						System.out.println(o.getProductName() + " | " + o.getCount() + " | " + o.getPricePerCount() * o.getCount());
 					}
 					System.out.println();
+					System.out.print("Enter 1 to payment details or 2 to exit : ");
+					int temp = sc.nextInt();
+					if(temp == 1) {
+						System.out.print("Enter Order id to view :  ");
+						int oid = sc.nextInt();
+						Payment p = buyer.getPaymentById(oid);
+						System.out.println(p);
+					}
+					System.out.println();
+
 				}
 
 
@@ -318,10 +368,10 @@ public class Main {
 				}
 				case 4 -> {
 					System.out.println("Your sold products details");
-					List<Product> soldProd  = seller.getSoldItems();
+					List<Order> soldProd  = seller.getSoldItems();
 					System.out.println("Product | units | Amount Paid");
 					for(int i=soldProd.size()-1; i>=0; i--) {
-						System.out.println(soldProd.get(i).getProductName()+" | " +soldProd.get(i).getCount() +" | "+soldProd.get(i).getSoldProd());
+						System.out.println(soldProd.get(i).getProductName()+" | " +soldProd.get(i).getCount() +" | "+(soldProd.get(i).getCount()*soldProd.get(i).getPricePerCount()));
 					}
 					System.out.println();
 				}

@@ -1,6 +1,8 @@
 package user;
 
-import inventory.Product;
+import inventory.*;
+import order.*;
+import payment.Payment;
 
 import java.util.*;
 
@@ -9,7 +11,8 @@ public class Buyer extends User {
 	private static List<Buyer> buyers = new ArrayList<Buyer>();
 
 	private List<Product> cart = new ArrayList<>();
-	private List<Product> orderedItem = new ArrayList<>();
+	private List<Order> orderedItem = new ArrayList<>();
+	private List<Payment> payments = new ArrayList<>();
 
 	public Buyer(String name, String mail, String address, String password) {
 		super(name, mail, address, "buyer" ,password);
@@ -33,12 +36,24 @@ public class Buyer extends User {
 	}
 
 
-	public void putOrderHistory(Product soldProd) {
+	public void putOrderHistory(Order soldProd) {
 		this.orderedItem.add(soldProd);
 	}
 
-	public List<Product>  getOrderHistory() {
+	public List<Order>  getOrderHistory() {
 		return this.orderedItem;
 	}
 
+	public void putPayments(Payment payment) {
+		this.payments.add(payment);
+	}
+
+	public Payment getPaymentById(int oid) {
+		for(Payment p : payments) {
+			if(oid == p.getOrder().getOrderId()) {
+				return p;
+			}
+		}
+		return null;
+	}
 }

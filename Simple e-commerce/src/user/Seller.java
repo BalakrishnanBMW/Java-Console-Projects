@@ -1,6 +1,8 @@
 package user;
 
 import inventory.*;
+import order.*;
+import payment.Payment;
 
 import java.util.*;
 
@@ -10,7 +12,7 @@ public class Seller extends User {
 
 	private List<Product> MyInventories = new ArrayList<>();
 
-	private List<Product> soldItems = new ArrayList<>();
+	private List<Order> soldItems = new ArrayList<>();
 
 	Inventory inventory = new Inventory();
 
@@ -57,7 +59,7 @@ public class Seller extends User {
 	}
 
 	public Product getproductById(int pid){
-		for(Product p : MyInventories) {
+        for(Product p : MyInventories) {
 			if(p.getProductId() == pid) {
 				return p;
 			}
@@ -71,11 +73,18 @@ public class Seller extends User {
 		inventory.deleteProductFromInv(p);
 	}
 
-	public void putSoldHistory(Product sp) {
+	public void putSoldHistory(Order sp) {
 		soldItems.add(sp);
 	}
 
-	public List<Product> getSoldItems() {
+
+	/**
+	 * return the sold Item of the user
+	 * */
+	public List<Order> getSoldItems() {
 		return soldItems;
+	}
+
+	public void recievedPayments(Payment payment) {
 	}
 }
