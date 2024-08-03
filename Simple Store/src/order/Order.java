@@ -1,28 +1,32 @@
 package order;
 
-import user.*;
+import user.Buyer;
+import user.Seller;
 
 public class Order {
-
     private int orderId;
     private static int id = 1;
     private String productName;
     private int count;
-    private double pricePerCount;
+    private double pricePerUnit;
     private Buyer payer;
     private Seller payee;
 
     public Order(String productName, int count, double pricePerCount, Buyer payer, Seller payee) {
-        this.setOrderId(id++);
+        this.setOrderId(this.incId());
         this.setProductName(productName);
         this.setCount(count);
-        this.setPricePerCount(pricePerCount);
+        this.setPricePerUnit(pricePerCount);
         this.setPayee(payee);
         this.setPayer(payer);
     }
 
+    private int incId() {
+        return id++;
+    }
+
     public int getOrderId() {
-        return orderId;
+        return this.orderId;
     }
 
     private void setOrderId(int orderId) {
@@ -30,42 +34,42 @@ public class Order {
     }
 
     public String getProductName() {
-        return productName;
+        return this.productName;
     }
 
-    public void setProductName(String productName) {
+    private void setProductName(String productName) {
         this.productName = productName;
     }
 
     public int getCount() {
-        return count;
+        return this.count;
     }
 
-    public void setCount(int count) {
+    private void setCount(int count) {
         this.count = count;
     }
 
-    public double getPricePerCount() {
-        return pricePerCount;
+    public double getPricePerUnit() {
+        return this.pricePerUnit;
     }
 
-    public void setPricePerCount(double pricePerCount) {
-        this.pricePerCount = pricePerCount;
+    private void setPricePerUnit(double pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
     }
 
     public Buyer getPayer() {
-        return payer;
+        return this.payer;
     }
 
-    public void setPayer(Buyer payer) {
+    private void setPayer(Buyer payer) {
         this.payer = payer;
     }
 
     public Seller getPayee() {
-        return payee;
+        return this.payee;
     }
 
-    public void setPayee(Seller payee) {
+    private void setPayee(Seller payee) {
         this.payee = payee;
     }
 }

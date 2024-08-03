@@ -47,19 +47,19 @@ public class Payment {
 
     public String toString() {
         return "\n\t--- Payment Detail ---\n\nDate : "+this.date +
-               "\nPayment Mode : " +this.paymentMethod +
-               "\n\nProduct Name : "+this.order.getProductName() +
-               "\nPrice per Unit : "+ this.order.getPricePerCount() +
-               "\nNumber of Units : "+ this.order.getCount() +
-               "\nTotal price : "+ this.order.getPricePerCount() * this.order.getCount() +
-               "\n\nBuyer : "+this.order.getPayer().getName() +
-               "\nBuyer Mail : "+this.order.getPayer().getMail() +
-               "\nBuyer Address : "+this.order.getPayer().getAddress() +
-               "\n\nSeller : " + this.order.getPayee().getName() +
-               "\nSeller Mail : "+this.order.getPayee().getMail() +
-               "\nSeller Address : "+this.order.getPayee().getAddress() +
-               "\n\n Order Status : Delivered \nPaid Amount : "+this.order.getPricePerCount() * this.order.getCount() +
-               "\n\t----------";
+                "\nPayment Mode : " +this.paymentMethod +
+                "\n\nProduct Name : "+this.order.getProductName() +
+                "\nPrice per Unit : "+ this.order.getPricePerUnit() +
+                "\nNumber of Units : "+ this.order.getCount() +
+                "\nTotal price : "+ this.order.getPricePerUnit() * this.order.getCount() +
+                "\n\nBuyer : "+this.order.getPayer().getName() +
+                "\nBuyer Mail : "+this.order.getPayer().getMail() +
+                "\nBuyer Address : "+this.order.getPayer().getAddress() +
+                "\n\nSeller : " + this.order.getPayee().getName() +
+                "\nSeller Mail : "+this.order.getPayee().getMail() +
+                "\nSeller Address : "+this.order.getPayee().getAddress() +
+                "\n\n Order Status : Delivered \nPaid Amount : "+this.order.getPricePerUnit() * this.order.getCount() +
+                "\n\t----------";
     }
 
 }
