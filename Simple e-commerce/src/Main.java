@@ -37,7 +37,7 @@ public class Main {
 							if(u != null) {
 								System.out.println("Logged in successful");
 								System.out.println();
-                                buyerMenu((Buyer)u);
+                                				buyerMenu((Buyer)u);
 							} else {
 								System.out.println("Incorrect Mail or Password. Try Again or Register");
 								System.out.println();
@@ -190,7 +190,7 @@ public class Main {
 								}
 								Payment payment = new Payment(soldProd, paymentMethod);
 								System.out.println("You sucessfully ordered the product");
-                                s.putSoldHistory(soldProd);
+                                				s.putSoldHistory(soldProd);
 								buyer.putOrderHistory(soldProd);
 								buyer.putPayments(payment);
 								s.recievedPayments(payment);
