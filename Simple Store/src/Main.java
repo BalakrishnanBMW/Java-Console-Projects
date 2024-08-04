@@ -191,8 +191,8 @@ public class Main {
                             System.out.print("Enter product id  which you want to remove from cart : ");
                             int pid = sc.nextInt();
                             sc.nextLine();
-                            Product product = inventory.getInventoryList().get(pid);
-                            buyer.removeFromMyCart(product);
+
+                            buyer.removeFromMyCart(pid);
                             System.out.println();
                             System.out.println("\nProduct removed from cart Successfully.\n");
                         }

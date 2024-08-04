@@ -8,6 +8,7 @@ import payment.Payment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Seller extends User{
 
@@ -65,6 +66,10 @@ public class Seller extends User{
         if(myProducts.contains(pid)) {
             inventory.deleteProductFromInventory(pid);
             myProducts.remove(Integer.valueOf(pid));
+            for(Map.Entry<String, Buyer> buyer : Buyer.getBuyers().entrySet()){
+                if(buyer.getValue().getMyCart().contains(pid))
+                    buyer.getValue().removeFromMyCart(pid);
+            }
             return true;
         }
         return false;

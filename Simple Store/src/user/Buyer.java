@@ -35,8 +35,8 @@ public class Buyer extends User {
             this.myCart.add(pid);
     }
 
-    public void removeFromMyCart(Product product) {
-        this.myCart.remove(Integer.valueOf(product.getProductId()));
+    public void removeFromMyCart(int pid) {
+        this.myCart.remove(Integer.valueOf(pid));
     }
 
 
